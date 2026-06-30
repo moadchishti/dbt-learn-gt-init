@@ -2,37 +2,57 @@ version: 2
 
 sources:
   - name: jaffle_shop
+    description: Raw operational tables from the `jaffle_shop` source system used to build staging and mart models.
     database: raw
     tables:
       - name: customer_web_activity
+        description: Raw customer web activity events captured from the jaffle_shop website.
+
       - name: customers
+        description: Raw customer master data with one record per customer.
         columns:
           - name: id
+            description: Unique system-generated identifier for the customer.
             data_type: number
             data_tests:
               - unique
               - not_null
           - name: first_name
+            description: Customer first name as captured in the source system.
             data_type: varchar
           - name: last_name
+            description: Customer last name as captured in the source system.
             data_type: varchar
+
       - name: items
+        description: Raw item-level records associated with customer orders.
+
       - name: locations
+        description: Raw store or geographic location records used by the source system.
+
       - name: order_items
+        description: Raw line-item records linking orders to the products included in each order.
+
       - name: orders
+        description: Raw order header records with customer, status, and load timing information.
         columns:
           - name: id
+            description: Unique system-generated identifier for the order.
             data_type: number
             data_tests:
               - unique
               - not_null
           - name: user_id
+            description: Identifier for the customer who placed the order.
             data_type: number
           - name: order_date
+            description: Date the order was placed in the source system.
             data_type: date
           - name: status
+            description: Current lifecycle status of the order in the source system.
             data_type: varchar
           - name: _etl_loaded_at
+            description: Timestamp when the record was loaded into the warehouse by the ingestion process.
             data_type: timestamp_ntz
         config:
           freshness:
@@ -43,6 +63,12 @@ sources:
               count: 2
               period: day
           loaded_at_field: _etl_loaded_at
+
       - name: products
+        description: Raw product dimension records referenced by order item data.
+
       - name: stores
+        description: Raw store records from the jaffle_shop operational system.
+
       - name: supplies
+        description: Raw supply and inventory-related records from the source system.

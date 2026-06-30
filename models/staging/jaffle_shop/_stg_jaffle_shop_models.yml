@@ -2,35 +2,35 @@ version: 2
 
 models:
   - name: stg_jaffle_shop__customers
-    description: ""
+    description: Standardized customer dimension source from `jaffle_shop.customers`, with raw identifiers renamed to analytics-friendly field names.
     columns:
       - name: customer_id
         data_type: number
-        description: ""
+        description: Primary key for the customer record.
 
       - name: first_name
         data_type: varchar
-        description: ""
+        description: Customer first name as provided in the raw source.
 
       - name: last_name
         data_type: varchar
-        description: ""
+        description: Customer last name as provided in the raw source.
 
   - name: stg_jaffle_shop__orders
-    description: ""
+    description: Standardized order records from `jaffle_shop.orders`, with raw identifiers renamed and order status preserved for downstream marts.
     columns:
       - name: order_id
         data_type: number
-        description: ""
+        description: Primary key for the order record.
 
       - name: customer_id
         data_type: number
-        description: ""
+        description: Foreign key to the customer who placed the order.
 
       - name: order_date
         data_type: date
-        description: ""
+        description: Calendar date when the order was placed.
 
-      - name: status
+      - name: order_status
         data_type: varchar
-        description: ""
+        description: Current lifecycle status of the order from the source system.
